@@ -1,13 +1,12 @@
 package edu.arch.shop.customer.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import edu.arch.shop.order.entity.Order;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -20,5 +19,24 @@ public class Customer {
     private Long id;
 
     @Column(nullable = false, length = 100)
-    private String name;
+    private String firstName;
+
+    @Column(nullable = false, length = 100)
+    private String lastName;
+
+    @Column(nullable = false, length = 150)
+    private String email;
+
+    @Column(nullable = true, length = 15)
+    private String phoneNumber;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders = new ArrayList<>();
+
+    public Customer(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
 }
